@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/antpher/team-profile-generator#readme",
   "dependencies": {
+    "inquirer": "^8.2.0",
     "jest": "^27.4.5"
   }
 }
