@@ -8,7 +8,7 @@ const Intern = require('./lib/Intern');
 const DIST_DIR = path.resolve(__dirname, 'dist')
 const outputPath = path.join(DIST_DIR, 'index.html');
 
-const render = require('./src/page-template.js');
+const render = require('./src/template.js');
 
 const teamArray = [];
 const idArray = [];
@@ -60,12 +60,12 @@ function teamProfileGenerator() {
                 ]
             }
         ])
-        then(function (data) {
+        .then(function (data) {
             if (data.memberChoice === "Engineer") {
                 engineer();
             } else if (data.memberChoice === "Intern") {
                 intern();
-            } else (completeTeam());
+            } else (generateTeam());
         });
     }
 
@@ -92,12 +92,12 @@ function teamProfileGenerator() {
                 message: "What is the engineer's GitHub?"
             }
         ])
-        .then(data => {
-            const engineer = new Engineer(data.engineerName, data.engineerId, data.engineerEmail, data.engineerGithub);
-            teamArray.push(engineer);
-            idArray.push(data.engineerId);
-            createTeam();
-        });
+            .then(data => {
+                const engineer = new Engineer(data.engineerName, data.engineerId, data.engineerEmail, data.engineerGithub);
+                teamArray.push(engineer);
+                idArray.push(data.engineerId);
+                createTeam();
+            });
     }
 
     function intern() {
@@ -123,11 +123,23 @@ function teamProfileGenerator() {
                 message: "What is the intern's school"
             }
         ])
-        .then(data => {
-            const intern = new Intern(data.internName, data.internId, data.internEmail, data.internSchool);
-            teamArray.push(intern);
-            idArray.push(data.internId);
-            createTeam();
-        });
+            .then(data => {
+                const intern = new Intern(data.internName, data.internId, data.internEmail, data.internSchool);
+                teamArray.push(intern);
+                idArray.push(data.internId);
+                createTeam();
+            });
     }
+
+    function generateTeam() {
+        if(!fs.existsSync(DIST_DIR)) {
+            fs.mkdirSync(DIST_DIR)
+        }
+        console.log('Generating team...');
+        fs.writeFileSync(outputPath, render(teamArray), "utf-8");
+    }
+
+    manager();
 }
+
+teamProfileGenerator();
