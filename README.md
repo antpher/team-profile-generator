@@ -23,3 +23,6 @@ WHEN I decide to finish building my team
 THEN I exit the application, and the HTML is generated
 
 ![image](https://user-images.githubusercontent.com/87097621/147984721-287ab888-9c2e-41eb-ba1f-c4669839f95a.png)
+
+![image](https://user-images.githubusercontent.com/87097621/148709262-2727524b-a6b4-4cda-b873-83c26dc30cfd.png)
+
